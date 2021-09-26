@@ -1,0 +1,137 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+    </h:head>
+
+    <h:body>
+    	<div class="card">
+    		<p:tabMenu >
+        		<p:menuitem value="Home" outcome="/index" icon="pi pi-home">
+            		<f:param name="i" value="0"/>
+       			</p:menuitem>
+       			<p:menuitem value="Departamento" outcome="/Departamento" icon="pi pi-sitemap">
+            		<f:param name="i" value="2"/>
+        		</p:menuitem>
+        		<p:menuitem value="Empleado" outcome="/Empleado" icon="pi pi-fw pi-user">
+            		<f:param name="i" value="1"/>
+        		</p:menuitem>
+    		</p:tabMenu>
+		</div>
+		<br></br>
+		<h:form>
+            <p:commandButton value="Agregar Empleado" actionListener="#{empleadoBean.limpiarEmpleado()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+            <p:separator/>
+        </h:form>
+		<h:form id="formListado">
+			<p:dataTable id="tablaEmpleados" paginator="true" paginatorPosition="bottom" rows="10" var="empleado" value="#{empleadoBean.listaEmpleados}" emptyMessage="No existe un departamento">
+				<p:column headerText="ID Empleado">
+                    <h:outputText value="#{empleado.id}">
+                    	<f:convertNumber type="number" maxIntegerDigits="5" maxFractionDigits="0"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Tipo de documento">
+                    <h:outputText value="#{empleado.documentoTipo}" />
+                </p:column>
+                <p:column headerText="Número documento">
+                    <h:outputText value="#{empleado.documentoNumero}" />
+                </p:column>          
+                <p:column headerText="Nombres">
+                    <h:outputText value="#{empleado.nombres}" />
+                </p:column>   
+                <p:column headerText="Apellidos">
+                    <h:outputText value="#{empleado.apellidos}" />
+                </p:column>
+                <p:column headerText="MODIFICAR" style="text-align: center">
+                    <p:commandButton icon="pi pi-pencil" title="Modificar" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
+                        <f:setPropertyActionListener target="#{empleadoBean.empleado}" value="#{empleado}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="ELIMINAR" style="text-align: center">
+                	<p:commandButton icon="pi pi-trash" title="Eliminar" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar">
+                		<f:setPropertyActionListener target="#{empleadoBean.empleado}" value="#{empleado}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form id="formAgregar">
+    		<p:dialog id="dlgAgregar" header="Agregar Empleado" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+    			<p:panelGrid columns="2" style="margin: 0 auto;">
+    				<p:outputLabel value="Tipo documento:"/>
+    				<p:inputText value="#{empleadoBean.empleado.documentoTipo}"/>
+    				<p:outputLabel value="Número documento:"/>
+    				<p:inputText value="#{empleadoBean.empleado.documentoNumero}"/>
+    				<p:outputLabel value="Nombres:"/>
+    				<p:inputText value="#{empleadoBean.empleado.nombres}"/>
+    				<p:outputLabel value="Apellidos:"/>
+    				<p:inputText value="#{empleadoBean.empleado.apellidos}"/>
+    				<p:outputLabel value="ID Departamento:"/>
+    				<p:inputText value="#{empleadoBean.idDepartamento}"/>
+    				<p:outputLabel value="Ciudad:"/>
+    				<p:inputText value="#{empleadoBean.empleado.ciudad}"/>
+    				<p:outputLabel value="Direccion:"/>
+    				<p:inputText value="#{empleadoBean.empleado.direccion}"/>
+    				<p:outputLabel value="Email:"/>
+    				<p:inputText value="#{empleadoBean.empleado.correoElectronico}"/>
+    				<p:outputLabel value="Teléfono:"/>
+    				<p:inputText value="#{empleadoBean.empleado.telefono}"/>
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{empleadoBean.crearEmpleado()}" update=":formListado:tablaEmpleados" oncomplete="PF('dialogoAgregar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+           </p:dialog>
+        </h:form>
+        <h:form id="formModificar">
+        	<p:dialog id="dlgModificar" header="Modificar Empleado" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+        		
+        		<p:panelGrid columns="2" style="margin: 0 auto;">
+					<p:outputLabel value="Id Empleado:"/>
+                    <p:inputText value="#{empleadoBean.empleado.id}"/>
+                    
+                    <p:outputLabel value="Tipo documento:"/>
+    				<p:inputText value="#{empleadoBean.empleado.documentoTipo}"/>
+    				
+    				<p:outputLabel value="Número documento:"/>
+    				<p:inputText value="#{empleadoBean.empleado.documentoNumero}"/>
+    				
+    				<p:outputLabel value="Nombres:"/>
+    				<p:inputText value="#{empleadoBean.empleado.nombres}"/>
+    				
+    				<p:outputLabel value="Apellidos:"/>
+    				<p:inputText value="#{empleadoBean.empleado.apellidos}"/>
+    				
+    				<p:outputLabel value="ID Departamento:"/>
+    				<p:inputText value="#{empleadoBean.empleado.departamento2.id}"/>
+    				
+    				<p:outputLabel value="Ciudad:"/>
+    				<p:inputText value="#{empleadoBean.empleado.ciudad}"/>
+    				
+    				<p:outputLabel value="Direccion:"/>
+    				<p:inputText value="#{empleadoBean.empleado.direccion}"/>
+    				
+    				<p:outputLabel value="Email:"/>
+    				<p:inputText value="#{empleadoBean.empleado.correoElectronico}"/>
+    				
+    				<p:outputLabel value="Teléfono:"/>
+    				<p:inputText value="#{empleadoBean.empleado.telefono}"/>
+    				
+    				<p:outputLabel value="Fecha de creación:"/>
+                    <p:inputText value="#{empleadoBean.empleado.fechaHoraCrea}" disabled="true"/>
+                    
+                    <p:outputLabel value="Fecha de Modificacion:"/>
+                    <p:inputText value="#{empleadoBean.empleado.fechaHoraModifica}" disabled="true"/>
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{empleadoBean.modificarEmpleado()}" update=":formListado:tablaEmpleados" oncomplete="PF('dialogoModificar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoModificar').hide();"/>
+            </p:dialog>
+        </h:form>
+        <h:form id="formEliminar">
+            <p:dialog id="dlgEliminar" header="Eliminar Empleado" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <h:outputText value="Desea eliminar este registro?"/>
+                <p:commandButton  value="Si" actionListener="#{empleadoBean.eliminarEmpleado()}" update=":formListado:tablaEmpleados" oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton  value="No" onclick="PF('dialogoEliminar').hide();"/>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>

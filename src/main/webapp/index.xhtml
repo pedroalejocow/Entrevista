@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+    </h:head>
+
+    <h:body>
+    	<div class="card">
+    		<p:tabMenu >
+        		<p:menuitem value="Home" outcome="/index" icon="pi pi-fw pi-home">
+            		<f:param name="i" value="0"/>
+       			</p:menuitem>
+       			<p:menuitem value="Departamento" outcome="/Departamento" icon="pi pi-sitemap">
+            		<f:param name="i" value="2"/>
+        		</p:menuitem>
+        		<p:menuitem value="Empleado" outcome="/Empleado" icon="pi pi-user">
+            		<f:param name="i" value="1"/>
+        		</p:menuitem>
+    		</p:tabMenu>
+		</div>
+    </h:body>
+</html>

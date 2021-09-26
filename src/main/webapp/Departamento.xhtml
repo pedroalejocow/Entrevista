@@ -1,0 +1,107 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+    </h:head>
+
+    <h:body>
+    	<div class="card">
+    		<p:tabMenu >
+        		<p:menuitem value="Home" outcome="/index" icon="pi pi-home">
+            		<f:param name="i" value="0"/>
+       			</p:menuitem>
+       			<p:menuitem value="Departamento" outcome="/Departamento" icon="pi pi-fw pi-sitemap">
+            		<f:param name="i" value="2"/>
+        		</p:menuitem>
+        		<p:menuitem value="Empleado" outcome="/Empleado" icon="pi pi-user">
+            		<f:param name="i" value="1"/>
+        		</p:menuitem>
+    		</p:tabMenu>
+		</div>
+		<br></br>
+		<h:form>
+            <p:commandButton value="Agregar Departamento" actionListener="#{departamentoBean.limpiarDepartamento()}" oncomplete="PF('dialogoAgregar').show();" update=":formAgregar"/>
+            <p:separator/>
+        </h:form>
+		<h:form id="formListado">
+			<p:dataTable id="tablaDepartamentos" paginator="true" paginatorPosition="bottom" rows="10" var="departamento" value="#{departamentoBean.listaDepartamentos}" emptyMessage="No existe un departamento">
+				<p:column headerText="ID Departamento">
+                    <h:outputText value="#{departamento.id}">
+                    	<f:convertNumber type="number" maxIntegerDigits="5" maxFractionDigits="0"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Codigo Departamento">
+                    <h:outputText value="#{departamento.departamentoCodigo}" />
+                </p:column>
+                <p:column headerText="Nombre Departamento">
+                    <h:outputText value="#{departamento.departamentoNombre}" />
+                </p:column>          
+                <p:column headerText="Fecha Creación Departamento">
+                    <h:outputText value="#{departamento.fechaHoraCrea}" />
+                </p:column>   
+                <p:column headerText="Fecha Modificación Departamento">
+                    <h:outputText value="#{departamento.fechaHoraModifica}" />
+                </p:column>
+                <p:column headerText="MODIFICAR" style="text-align: center">
+                    <p:commandButton icon="pi pi-pencil" title="Modificar" oncomplete="PF('dialogoModificar').show();" update=":formModificar">
+                        <f:setPropertyActionListener target="#{departamentoBean.departamento}" value="#{departamento}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="ELIMINAR" style="text-align: center">
+                	<p:commandButton icon="pi pi-trash" title="Eliminar" oncomplete="PF('dialogoEliminar').show();" update=":formEliminar">
+                		<f:setPropertyActionListener target="#{departamentoBean.departamento}" value="#{departamento}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form id="formAgregar">
+    		<p:dialog id="dlgAgregar" header="Agregar Departamento" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+    			<p:panelGrid columns="2" style="margin: 0 auto;">
+    				<p:outputLabel value="Codigo:"/>
+    				<p:inputText value="#{departamentoBean.departamento.departamentoCodigo}"/>
+    				<p:outputLabel value="Nombre:"/>
+    				<p:inputText value="#{departamentoBean.departamento.departamentoNombre}"/>
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{departamentoBean.crearDepartamento()}" update=":formListado:tablaDepartamentos" oncomplete="PF('dialogoAgregar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoAgregar').hide();"/>
+           </p:dialog>
+        </h:form>
+        <h:form id="formModificar">
+        	<p:dialog id="dlgModificar" header="Modificar Departamento" widgetVar="dialogoModificar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+        		
+        		<p:panelGrid columns="3" style="margin: 0 auto;">
+					<p:outputLabel value="Id Departamento:"/>
+                    <p:inputText value="#{departamentoBean.departamento.id}"/>
+                    <!--<h:inputHidden id="depCodeTrackerID" value="#{departamentoBean.departamento.id}" />-->
+                    
+                    <p:outputLabel value="Codigo:"/>
+                    <p:inputText value="#{departamentoBean.departamento.departamentoCodigo}"/>
+                    <!--<h:inputHidden id="depCodeTrackerCodigo" value="#{departamentoBean.departamento.departamentoCodigo}" />-->
+                    
+                    <p:outputLabel value="Nombre:"/>
+                    <p:inputText value="#{departamentoBean.departamento.departamentoNombre}"/>
+                    <!--<h:inputHidden id="depCodeTrackerNomre" value="#{departamentoBean.departamento.departamentoNombre}" />-->
+                    
+                    <p:outputLabel value="Fecha de creación:"/>
+                    <p:inputText value="#{departamentoBean.departamento.fechaHoraCrea}" disabled="true"/>
+                    <!--<h:inputHidden id="depCodeTrackerFechaCreacion" value="#{departamentoBean.departamento.fechaHoraCrea}" />-->
+                    
+                    <p:outputLabel value="Fecha de Modificacion:"/>
+                    <p:inputText value="#{departamentoBean.departamento.fechaHoraModifica}" disabled="true"/>
+                    <!--<h:inputHidden id="depCodeTrackerCodigoFechaModificacion" value="#{departamentoBean.departamento.fechaHoraModifica}" />-->
+                </p:panelGrid>
+                <p:commandButton  value="Guardar" actionListener="#{departamentoBean.modificarDepartamento()}" update=":formListado:tablaDepartamentos" oncomplete="PF('dialogoModificar').hide();"/>
+                <p:commandButton  value="Cancelar" onclick="PF('dialogoModificar').hide();"/>
+            </p:dialog>
+        </h:form>
+        <h:form id="formEliminar">
+            <p:dialog id="dlgEliminar" header="Eliminar Departamento" widgetVar="dialogoEliminar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
+                <h:outputText value="Desea eliminar este registro?"/>
+                <p:commandButton  value="Si" actionListener="#{departamentoBean.eliminarDepartamento()}" update=":formListado:tablaDepartamentos" oncomplete="PF('dialogoEliminar').hide();"/>
+                <p:commandButton  value="No" onclick="PF('dialogoEliminar').hide();"/>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
