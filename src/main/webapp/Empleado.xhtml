@@ -59,22 +59,36 @@
         <h:form id="formAgregar">
     		<p:dialog id="dlgAgregar" header="Agregar Empleado" widgetVar="dialogoAgregar" resizable="false" showEffect="fade" hideEffect="explode" modal="true">
     			<p:panelGrid columns="2" style="margin: 0 auto;">
+    			
     				<p:outputLabel value="Tipo documento:"/>
     				<p:inputText value="#{empleadoBean.empleado.documentoTipo}"/>
+    				
     				<p:outputLabel value="Número documento:"/>
     				<p:inputText value="#{empleadoBean.empleado.documentoNumero}"/>
+    				
     				<p:outputLabel value="Nombres:"/>
     				<p:inputText value="#{empleadoBean.empleado.nombres}"/>
+    				
     				<p:outputLabel value="Apellidos:"/>
     				<p:inputText value="#{empleadoBean.empleado.apellidos}"/>
-    				<p:outputLabel value="ID Departamento:"/>
-    				<p:inputText value="#{empleadoBean.idDepartamento}"/>
+    				
+                	<p:outputLabel value="Departamento"/>
+                	<p:selectOneMenu id="option" value="#{empleadoBean.departamentoSelect.id}">
+                    	<f:selectItem itemLabel="Selecione Departamento" itemValue=""/>
+                    	<f:selectItems value="#{empleadoBean.listaDepartamentos}"/>
+                	</p:selectOneMenu>
+            
+    				
+    				
     				<p:outputLabel value="Ciudad:"/>
     				<p:inputText value="#{empleadoBean.empleado.ciudad}"/>
+    				
     				<p:outputLabel value="Direccion:"/>
     				<p:inputText value="#{empleadoBean.empleado.direccion}"/>
+    				
     				<p:outputLabel value="Email:"/>
     				<p:inputText value="#{empleadoBean.empleado.correoElectronico}"/>
+    				
     				<p:outputLabel value="Teléfono:"/>
     				<p:inputText value="#{empleadoBean.empleado.telefono}"/>
                 </p:panelGrid>
